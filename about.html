@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CulinaryCloud — Luxury Food Delivery & Fine Dining Experience</title>
+  <meta name="description" content="Experience the finest restaurants and gourmet cuisine delivered to your doorstep. From Michelin-inspired dishes to international delicacies." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0e14; --card:#121723; --muted:#9aa3b2; --text:#e8eefc;
+      --brand:#ff7849; --brand-2:#ffd166; --ok:#10b981; --danger:#ef4444;
+      --radius:18px; --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --ring: 0 0 0 3px rgba(255,120,73,.25); --maxw:1100px;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;color:var(--text);
+      background:radial-gradient(1200px 600px at 80% -10%, #1a2030 10%, transparent 60%), linear-gradient(180deg,#0b0e14, #090c12 40%);}
+    a{color:inherit; text-decoration:none} img{max-width:100%; display:block}
+    .container{max-width:var(--maxw); margin-inline:auto; padding:28px 20px}
+    .row{display:flex; gap:18px; flex-wrap:wrap}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:50; backdrop-filter: blur(12px); background:rgba(9,12,18,.45); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+    .logo{width:36px; height:36px; border-radius:12px; display:grid; place-items:center; background:linear-gradient(135deg,var(--brand),#ff4d4d); box-shadow:0 6px 18px rgba(255,99,71,.35)}
+    .pill{display:flex; gap:10px; padding:8px 12px; background:#0f1420; border:1px solid rgba(255,255,255,.08); border-radius:999px}
+    .pill input{all:unset; color:var(--text); width:200px}
+    .btn{appearance:none; border:0; border-radius:14px; padding:12px 16px; font-weight:600; cursor:pointer; background:var(--brand); color:#170e0a; transition:.25s transform, .25s box-shadow, .25s filter}
+    .btn:hover{filter:saturate(1.05); box-shadow:var(--ring)}
+    .btn.secondary{background:#1a2131; color:var(--text); border:1px solid rgba(255,255,255,.08)}
+    .icon-btn{display:inline-grid; place-items:center; width:44px; height:44px; border-radius:14px; background:#141a28; border:1px solid rgba(255,255,255,.08); cursor:pointer}
+
+    /* Hero */
+    .hero{position:relative; isolation:isolate}
+    .hero-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:center}
+    .kicker{color:var(--brand-2); font-weight:700; letter-spacing:.4px; text-transform:uppercase; font-size:12px}
+    h1{font-size: clamp(32px, 5vw, 56px); line-height:1.05; margin:10px 0 14px}
+    .lead{color:var(--muted); font-size:18px}
+    .hero-card{background:linear-gradient(180deg,#161b29,#101520); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .hero-img{aspect-ratio: 4/3; border-radius:16px; overflow:hidden; position:relative}
+    .hero-img img{width:100%; height:100%; object-fit:cover}
+    .floating{position:absolute; inset:auto 16px 16px auto; background:#0e1421; border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:12px 14px; display:flex; align-items:center; gap:10px; box-shadow:var(--shadow)}
+    .rating{display:flex; align-items:center; gap:4px; font-weight:700}
+
+    /* Badges */
+    .badges{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .badge{padding:8px 10px; border-radius:999px; background:#101625; border:1px solid rgba(255,255,255,.08); color:var(--muted); font-weight:600; font-size:13px}
+
+    /* Menu */
+    .section{padding:18px 0 10px}
+    .section h2{font-size:28px; margin:0 0 12px}
+    .filters{display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 20px}
+    .chip{padding:10px 12px; border:1px solid rgba(255,255,255,.12); border-radius:999px; background:#0f1523; cursor:pointer; font-weight:600; color:var(--muted)}
+    .chip.active{background:linear-gradient(135deg,#182033,#0f1420); color:#fff; border-color:rgba(255,255,255,.2)}
+    .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
+    @media (max-width:1000px){.hero-grid{grid-template-columns:1fr} .grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg,#0f1420,#0c1018); border:1px solid rgba(255,255,255,.06); border-radius:18px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; transition: transform 0.3s ease, box-shadow 0.3s ease}
+    .thumb{aspect-ratio: 4/3; overflow:hidden; position:relative}
+    .thumb::after{content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 50%)}
+    .thumb img{width:100%; height:100%; object-fit:cover; transition: transform .5s ease}
+    .card:hover{transform:translateY(-5px); box-shadow:0 15px 35px rgba(0,0,0,.4)}
+    .card:hover .thumb img{transform:scale(1.07)}
+    .card-body{padding:14px; display:flex; flex-direction:column; gap:8px}
+    .title{font-weight:700}
+    .meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px}
+    .price{margin-left:auto; font-weight:800; color:#fff}
+    .add{margin-top:auto; display:flex; gap:10px}
+    .qty{display:flex; align-items:center; gap:8px}
+    .qty button{width:36px; height:36px; border-radius:10px; background:#141b2a; border:1px solid rgba(255,255,255,.08); color:#fff; font-size:18px; cursor:pointer}
+
+    /* Cart Drawer */
+    .cart-drawer{position:fixed; right:20px; bottom:20px; z-index:60}
+    .cart-toggle{display:flex; align-items:center; gap:10px}
+    .cart-bubble{position:absolute; top:-6px; right:-6px; background:var(--danger); color:#fff; font-weight:800; border-radius:999px; font-size:12px; padding:2px 6px}
+    .drawer{display:none; position:fixed; right:20px; bottom:82px; width:min(420px, 92vw); background:#0f1523; border:1px solid rgba(255,255,255,.12); border-radius:18px; box-shadow:var(--shadow)}
+    .drawer.open{display:block}
+    .drawer header{position:unset; backdrop-filter:none; background:transparent; border:0}
+    .drawer .items{max-height:50vh; overflow:auto; padding:0 16px 16px}
+    .line{display:flex; gap:10px; align-items:center; padding:12px 0; border-bottom:1px dashed rgba(255,255,255,.08)}
+    .line img{width:56px; height:56px; border-radius:12px; object-fit:cover}
+    .line .grow{flex:1}
+    .line .qty-mini{display:flex; gap:6px; align-items:center}
+    .line .qty-mini button{width:28px; height:28px; border-radius:8px; background:#141b2a; border:1px solid rgba(255,255,255,.08); color:#fff; font-size:16px; cursor:pointer}
+    .summary{display:flex; justify-content:space-between; padding:12px 16px; border-top:1px solid rgba(255,255,255,.08)}
+    .checkout{padding:16px}
+
+    /* Offers Section */
+    .offers-section{padding:60px 0; background:linear-gradient(180deg,#0c1018,#0f1420)}
+    .offers-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:40px}
+    @media (max-width:1000px){.offers-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.offers-grid{grid-template-columns:1fr}}
+    .offer-card{background:#141b2a; border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:24px; position:relative; transition:transform .3s ease, box-shadow .3s ease}
+    .offer-card:hover{transform:translateY(-5px); box-shadow:0 20px 40px rgba(0,0,0,.3)}
+    .offer-card.premium{background:linear-gradient(135deg,#1a1f35,#0f1420); border:1px solid var(--brand)}
+    .offer-badge{position:absolute; top:-12px; left:24px; background:var(--brand); color:#fff; font-weight:600; font-size:12px; padding:4px 12px; border-radius:999px}
+    .offer-card.premium .offer-badge{background:linear-gradient(135deg,var(--brand),#ff4d4d)}
+    .offer-card h3{font-size:24px; font-weight:700; margin:20px 0 10px}
+    .offer-desc{color:var(--muted); margin-bottom:20px}
+    .offer-code{background:#0f1420; border:1px dashed rgba(255,255,255,.2); border-radius:12px; padding:12px; display:flex; align-items:center; justify-content:space-between; margin-bottom:16px}
+    .offer-code span{color:var(--muted); font-size:14px}
+    .offer-code strong{color:var(--brand); font-size:16px; letter-spacing:1px}
+    .copy-code{width:100%; background:#1a2131 !important; color:var(--text) !important; border:1px solid rgba(255,255,255,.08)}
+    .offer-valid{text-align:center; color:var(--muted); font-size:13px; margin-top:12px}
+
+    /* Reviews Section */
+    .reviews{background:linear-gradient(180deg,#0f1420,#0c1018); padding:60px 0; margin:40px 0}
+    .reviews-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:40px}
+    @media (max-width:1000px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.reviews-grid{grid-template-columns:1fr}}
+    .review-card{background:#141b2a; border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:24px; transition: transform 0.3s ease}
+    .review-card:hover{transform:translateY(-5px)}
+    .review-header{display:flex; align-items:center; gap:12px; margin-bottom:16px}
+    .review-avatar{width:48px; height:48px; border-radius:50%; object-fit:cover}
+    .review-stars{color:#ffd700; margin-top:4px}
+    .review-text{color:var(--muted); line-height:1.6; margin-bottom:16px}
+    .review-meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px}
+    .review-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:40px; text-align:center}
+    .stat-value{font-size:36px; font-weight:800; color:var(--brand); margin-bottom:8px}
+    .stat-label{color:var(--muted)}
+
+    /* Order Tracking */
+    .tracking-section{padding:60px 0; background:linear-gradient(180deg,#0f1420,#0c1018)}
+    .tracking-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center}
+    @media (max-width:1000px){.tracking-grid{grid-template-columns:1fr}}
+    .tracking-steps{margin-top:40px}
+    .tracking-step{display:flex; gap:20px; margin-bottom:30px; position:relative}
+    .tracking-step:not(:last-child):after{content:''; position:absolute; top:40px; left:20px; width:2px; height:calc(100% - 20px); background:rgba(255,255,255,.1)}
+    .tracking-step.active:after{background:var(--brand)}
+    .step-icon{width:40px; height:40px; border-radius:50%; background:#1a2131; display:grid; place-items:center; position:relative; z-index:1}
+    .tracking-step.active .step-icon{background:var(--brand); color:#fff}
+    .step-content h4{font-weight:600; margin-bottom:4px}
+    .step-content p{color:var(--muted)}
+    .tracking-map{position:relative; border-radius:20px; overflow:hidden}
+    .tracking-map img{width:100%; height:300px; object-fit:cover}
+    .map-overlay{position:absolute; inset:0; background:rgba(15,20,32,.8); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px}
+    .eta{text-align:center}
+    .eta strong{display:block; font-size:20px; margin-bottom:8px}
+    .eta span{color:var(--brand); font-size:24px; font-weight:700}
+
+    /* Customer Support */
+    .support-section{padding:60px 0; background:linear-gradient(180deg,#0c1018,#0f1420)}
+    .support-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:60px}
+    @media (max-width:1000px){.support-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.support-grid{grid-template-columns:1fr}}
+    .support-card{background:#141b2a; border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:24px; text-align:center; transition:transform .3s ease}
+    .support-card:hover{transform:translateY(-5px)}
+    .support-icon{width:64px; height:64px; margin:0 auto 20px; background:#1a2131; border-radius:50%; display:grid; place-items:center; color:var(--brand)}
+    .support-card h3{font-size:20px; font-weight:700; margin-bottom:10px}
+    .support-card p{color:var(--muted); margin-bottom:20px}
+    .faq-section{margin-top:40px}
+    .faq-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px}
+    @media (max-width:640px){.faq-grid{grid-template-columns:1fr}}
+    .faq-item{background:#141b2a; border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:24px}
+    .faq-item h4{font-weight:600; margin-bottom:10px}
+    .faq-item p{color:var(--muted)}
+
+    /* Login Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.7);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-content {
+      background: linear-gradient(180deg,#141b2a,#0f1420);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      width: min(420px, 90vw);
+      box-shadow: var(--shadow);
+      animation: modalSlide .3s ease;
+    }
+    @keyframes modalSlide {
+      from {opacity:0; transform:translateY(20px)}
+      to {opacity:1; transform:translateY(0)}
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .login-form {
+      padding: 24px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      background: #1a2131;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 15px;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: var(--ring);
+    }
+    .password-input {
+      position: relative;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 0;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+    }
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+    }
+    .forgot-link {
+      color: var(--brand);
+      font-weight: 500;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 24px;
+    }
+    .social-login {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .social-login p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .social-login p::before,
+    .social-login p::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: rgba(255,255,255,.08);
+    }
+    .social-login p::before {
+      left: 0;
+    }
+    .social-login p::after {
+      right: 0;
+    }
+    .social-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      background: #1a2131;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      color: var(--text);
+      font-weight: 500;
+      cursor: pointer;
+      transition: .2s;
+    }
+    .social-btn:hover {
+      background: #212a3f;
+    }
+    .signup-link {
+      text-align: center;
+      color: var(--muted);
+    }
+    .signup-link a {
+      color: var(--brand);
+      font-weight: 500;
+    }
+
+    /* Footer */
+    footer{margin-top:40px; border-top:1px solid rgba(255,255,255,.08); background:#0a0e15}
+    .foot{display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:18px}
+    .foot a{color:var(--muted)}
+    @media (max-width:900px){.foot{grid-template-columns:1fr 1fr} .hero-img{aspect-ratio:16/10}}
+    @media (max-width:640px){.foot{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L8 6H4v4l-2 4v6h20v-6l-2-4V6h-4L12 2z" opacity=".9"/>
+            <path d="M12 17a3 3 0 100-6 3 3 0 000 6z" opacity=".9"/>
+          </svg>
+        </span>
+        <span>CulinaryCloud</span>
+      </div>
+
+      <div class="pill" role="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2"/></svg>
+        <input id="search" placeholder="Search dishes, cuisine, restaurant…" aria-label="Search" />
+      </div>
+
+      <div style="display:flex; gap:10px">
+        <button id="openLogin" class="btn secondary">Login</button>
+        <button id="openCart" class="btn" aria-haspopup="dialog" aria-controls="cartDrawer">Cart
+          <span id="cartCount" class="cart-bubble" style="display:none">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal" aria-labelledby="modalTitle" aria-modal="true" style="display:none">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle" class="text-xl font-bold">Welcome Back</h2>
+        <button class="icon-btn" onclick="toggleLogin(false)" aria-label="Close login">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <form id="loginForm" class="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-input">
+            <input type="password" id="password" required placeholder="Enter your password">
+            <button type="button" class="toggle-password" onclick="togglePassword()" aria-label="Toggle password visibility">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5c-5 0-9 5-9 7s4 7 9 7 9-5 9-7-4-7-9-7zm0 11c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z" fill="currentColor"/>
+                <circle cx="12" cy="12" r="2" fill="currentColor"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="form-footer">
+          <label class="remember-me">
+            <input type="checkbox" id="remember"> Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn login-btn">Login</button>
+        <div class="social-login">
+          <p>Or continue with</p>
+          <div class="social-buttons">
+            <button type="button" class="social-btn google">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.35 10.04H12v3.51h5.31c-.49 2.41-2.56 4.16-5.31 4.16-3.31 0-6-2.69-6-6s2.69-6 6-6c1.48 0 2.84.54 3.89 1.43l2.61-2.61C16.97 3.03 14.62 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10c8.84 0 9.91-8.31 9.91-9.91 0-.69-.06-1.35-.17-2.05z"/>
+              </svg>
+              Google
+            </button>
+            <button type="button" class="social-btn facebook">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h8.62v-7h-2.35v-2.69h2.35v-2a3.27 3.27 0 0 1 3.49-3.59c.99.01 1.85.07 2.1.1v2.44h-1.44c-1.13 0-1.35.54-1.35 1.32v1.73h2.69L17.76 14h-2.34v7H20a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"/>
+              </svg>
+              Facebook
+            </button>
+          </div>
+        </div>
+        <div class="signup-link">
+          Don't have an account? <a href="#">Sign up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero container">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">Michelin-Inspired • Artisanal • Extraordinary</div>
+        <h1>Where Luxury Meets <span style="color:var(--brand)">Convenience</span></h1>
+        <p class="lead">Indulge in an exquisite dining experience curated by award-winning chefs. From rare delicacies to local specialties, savor restaurant-quality cuisine in the comfort of your home.</p>
+        <div class="badges">
+          <span class="badge">Dedicated Concierge</span>
+          <span class="badge">Temperature-Controlled Delivery</span>
+          <span class="badge">Premium Packaging</span>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn" onclick="scrollToMenu()">Browse Menu</button>
+          <button class="btn secondary" onclick="demoAddBestSellers()">Add Best Sellers</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-img">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80" alt="Assorted gourmet food ready for delivery"/>
+          <div class="floating" aria-label="Customer rating">
+            <div class="rating">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              4.9
+            </div>
+            <span style="color:var(--muted)">Trusted by 120k+ foodies</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Offers & Promotions -->
+  <section class="offers-section">
+    <div class="container">
+      <h2 class="text-3xl font-extrabold text-center mb-8">Special Offers</h2>
+      <div class="offers-grid">
+        <!-- Premium Offer -->
+        <div class="offer-card premium">
+          <div class="offer-badge">PREMIUM</div>
+          <h3>First Order Special</h3>
+          <p class="offer-desc">Get 20% off on your first order above $50</p>
+          <div class="offer-code">
+            <span>Use Code:</span>
+            <strong>WELCOME20</strong>
+          </div>
+          <button class="btn copy-code" onclick="copyCode('WELCOME20')">Copy Code</button>
+          <div class="offer-valid">Valid until Sept 30, 2025</div>
+        </div>
+
+        <!-- Free Delivery -->
+        <div class="offer-card">
+          <div class="offer-badge">FREE DELIVERY</div>
+          <h3>Weekend Special</h3>
+          <p class="offer-desc">Free delivery on orders above $75</p>
+          <div class="offer-code">
+            <span>Use Code:</span>
+            <strong>FREEDELIVERY</strong>
+          </div>
+          <button class="btn copy-code" onclick="copyCode('FREEDELIVERY')">Copy Code</button>
+          <div class="offer-valid">Valid on weekends</div>
+        </div>
+
+        <!-- Combo Deal -->
+        <div class="offer-card">
+          <div class="offer-badge">COMBO DEAL</div>
+          <h3>Family Feast</h3>
+          <p class="offer-desc">Save 25% on family-size orders</p>
+          <div class="offer-code">
+            <span>Use Code:</span>
+            <strong>FAMILY25</strong>
+          </div>
+          <button class="btn copy-code" onclick="copyCode('FAMILY25')">Copy Code</button>
+          <div class="offer-valid">Valid on orders above $100</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section class="reviews">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="text-3xl font-extrabold">What Our Customers Say</h2>
+        <p class="text-xl text-gray-500 mt-4">Join thousands of satisfied customers who love CulinaryCloud</p>
+        
+        <!-- Overall Rating Card -->
+        <div class="flex justify-center mt-8">
+          <div class="review-card" style="display:inline-flex; align-items:center; padding:24px 36px; gap:16px">
+            <div style="font-size:48px; font-weight:800; color:var(--brand)">4.9</div>
+            <div class="review-stars" style="font-size:24px">★★★★★</div>
+            <div style="color:var(--muted); font-size:18px">(4,826 reviews)</div>
+          </div>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="reviews-grid">
+          <!-- Review 1 -->
+          <div class="review-card">
+            <div class="review-header">
+              <img class="review-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah M.">
+              <div>
+                <div style="font-weight:600">Sarah M.</div>
+                <div class="review-stars">★★★★★</div>
+              </div>
+            </div>
+            <p class="review-text">"The Wagyu Sushi Platter was absolutely divine! The attention to detail and fresh ingredients made it an unforgettable dining experience. CulinaryCloud never disappoints!"</p>
+            <div class="review-meta">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+              </svg>
+              Verified Purchase
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="review-card">
+            <div class="review-header">
+              <img class="review-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" alt="Michael R.">
+              <div>
+                <div style="font-weight:600">Michael R.</div>
+                <div class="review-stars">★★★★★</div>
+              </div>
+            </div>
+            <p class="review-text">"The Molecular Mixology Flight was a show-stopper! Each cocktail was a work of art, and the flavors were incredible. The presentation was Instagram-worthy!"</p>
+            <div class="review-meta">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+              </svg>
+              Verified Purchase
+            </div>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="review-card">
+            <div class="review-header">
+              <img class="review-avatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Emily L.">
+              <div>
+                <div style="font-weight:600">Emily L.</div>
+                <div class="review-stars">★★★★★</div>
+              </div>
+            </div>
+            <p class="review-text">"As a vegan, finding gourmet options can be challenging. The Garden of Eden Platter exceeded all expectations. The flavors and presentation were outstanding!"</p>
+            <div class="review-meta">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+              </svg>
+              Verified Purchase
+            </div>
+          </div>
+        </div>
+
+        <!-- Statistics Grid -->
+        <div class="review-stats">
+          <div>
+            <div class="stat-value">98%</div>
+            <div class="stat-label">Satisfaction Rate</div>
+          </div>
+          <div>
+            <div class="stat-value">15k+</div>
+            <div class="stat-label">Monthly Orders</div>
+          </div>
+          <div>
+            <div class="stat-value">30min</div>
+            <div class="stat-label">Average Delivery</div>
+          </div>
+          <div>
+            <div class="stat-value">4.9</div>
+            <div class="stat-label">App Store Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="container section">
+    <h2>Popular Near You</h2>
+    <div class="filters" aria-label="Filters">
+      <button class="chip active" data-filter="all">All</button>
+      
+      <button class="chip" data-filter="burger">Burgers</button>
+      <button class="chip" data-filter="pizza">Pizza</button>
+      <button class="chip" data-filter="sushi">Sushi</button>
+      <button class="chip" data-filter="asian">Asian</button>
+     
+      <button class="chip" data-filter="mexican">Mexican</button>
+      <button class="chip" data-filter="indian">Indian</button>
+      <button class="chip" data-filter="vegan">Vegan</button>
+      <button class="chip" data-filter="pasta">Pasta</button>
+      <button class="chip" data-filter="seafood">Seafood</button>
+      <button class="chip" data-filter="dessert">Desserts</button>
+      <button class="chip" data-filter="drink">Beverages</button>
+    </div>
+    <div id="grid" class="grid" role="list"></div>
+  </section>
+
+  <!-- Cart Drawer -->
+  <div id="cartDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <header class="container" style="padding:14px 16px 8px">
+      <div style="display:flex; align-items:center; gap:10px; justify-content:space-between">
+        <strong id="cartTitle" style="font-size:18px">Your Cart</strong>
+        <button class="icon-btn" onclick="toggleDrawer(false)" aria-label="Close cart">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="items" id="cartItems"></div>
+    <div class="summary">
+      <div>
+        <div style="color:var(--muted); font-size:13px">Subtotal</div>
+        <div id="subtotal" style="font-weight:800; font-size:18px">$0.00</div>
+      </div>
+      <div>
+        <div style="color:var(--muted); font-size:13px">Delivery</div>
+        <div id="deliveryFee" style="font-weight:800; font-size:18px">$2.99</div>
+      </div>
+      <div>
+        <div style="color:var(--muted); font-size:13px">Total</div>
+        <div id="total" style="font-weight:800; font-size:18px">$2.99</div>
+      </div>
+    </div>
+    <div class="checkout">
+      <button class="btn" style="width:100%" onclick="fakeCheckout()">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <!-- Floating Cart Toggle -->
+  <div class="cart-drawer">
+    <button id="floatingCart" class="icon-btn cart-toggle" onclick="toggleDrawer()" aria-label="Open cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 5h2l1.6 9.6A2 2 0 0 0 8.6 16h7.9a2 2 0 0 0 2-1.6L20 9H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="20" r="1.6" fill="currentColor"/><circle cx="18" cy="20" r="1.6" fill="currentColor"/></svg>
+      <span id="cartCountFloating" class="cart-bubble" style="display:none">0</span>
+    </button>
+  </div>
+
+  <!-- Order Tracking Section -->
+  <section class="tracking-section">
+    <div class="container">
+      <div class="tracking-grid">
+        <div class="tracking-info">
+          <h2 class="text-3xl font-extrabold mb-4">Real-Time Order Tracking</h2>
+          <p class="text-xl text-gray-500 mb-8">Track your order every step of the way with our advanced tracking system</p>
+          
+          <div class="tracking-steps">
+            <div class="tracking-step active">
+              <div class="step-icon">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M3 3h18v2H3V3z"/><path d="M3 8h18v2H3V8z"/><path d="M3 13h18v2H3v-2z"/>
+                </svg>
+              </div>
+              <div class="step-content">
+                <h4>Order Confirmed</h4>
+                <p>Your order has been received and confirmed</p>
+              </div>
+            </div>
+            
+            <div class="tracking-step active">
+              <div class="step-icon">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                </svg>
+              </div>
+              <div class="step-content">
+                <h4>Preparing</h4>
+                <p>Our chefs are preparing your gourmet meal</p>
+              </div>
+            </div>
+            
+            <div class="tracking-step">
+              <div class="step-icon">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 7c0-1.1-.9-2-2-2h-3V3H6v2H3c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7zm-6-2h2v2h-2V5zm-9 2h16v11H4V7z"/>
+                </svg>
+              </div>
+              <div class="step-content">
+                <h4>On the Way</h4>
+                <p>Your order is on its way to you</p>
+              </div>
+            </div>
+            
+            <div class="tracking-step">
+              <div class="step-icon">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                </svg>
+              </div>
+              <div class="step-content">
+                <h4>Delivered</h4>
+                <p>Enjoy your gourmet experience!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="tracking-map">
+          <div class="map-placeholder">
+            <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&q=80" alt="Map Preview">
+            <div class="map-overlay">
+              <div class="eta">
+                <strong>Estimated Time</strong>
+                <span>25-30 minutes</span>
+              </div>
+              <button class="btn secondary" onclick="alert('Live tracking demo')">Track Live</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Support Section -->
+  <section class="support-section">
+    <div class="container">
+      <div class="support-grid">
+        <div class="support-card">
+          <div class="support-icon">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+            </svg>
+          </div>
+          <h3>24/7 Live Chat</h3>
+          <p>Get instant help from our support team</p>
+          <button class="btn" onclick="alert('Live chat demo')">Start Chat</button>
+        </div>
+
+        <div class="support-card">
+          <div class="support-icon">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+            </svg>
+          </div>
+          <h3>Email Support</h3>
+          <p>We'll respond within 2 hours</p>
+          <button class="btn" onclick="alert('Email support demo')">Send Email</button>
+        </div>
+
+        <div class="support-card">
+          <div class="support-icon">
+            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.54 5c.06.89.21 1.76.45 2.59l-1.2 1.2c-.41-1.2-.67-2.47-.76-3.79h1.51m9.86 12.02c.85.24 1.72.39 2.6.45v1.49c-1.32-.09-2.59-.35-3.8-.75l1.2-1.19M7.5 3H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.49c0-.55-.45-1-1-1-1.24 0-2.45-.2-3.57-.57-.1-.04-.21-.05-.31-.05-.26 0-.51.1-.71.29l-2.2 2.2c-2.83-1.45-5.15-3.76-6.59-6.59l2.2-2.2c.28-.28.36-.67.25-1.02C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1z"/>
+            </svg>
+          </div>
+          <h3>Phone Support</h3>
+          <p>Call us for immediate assistance</p>
+          <button class="btn" onclick="alert('Phone support demo')">Call Now</button>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h3 class="text-2xl font-bold mb-6">Frequently Asked Questions</h3>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h4>How do I track my order?</h4>
+            <p>You can track your order in real-time using our tracking system. Just click on "Track Order" in your confirmation email or on our website.</p>
+          </div>
+          <div class="faq-item">
+            <h4>What's your delivery radius?</h4>
+            <p>We currently deliver within a 10-mile radius of our partner restaurants to ensure food quality and temperature.</p>
+          </div>
+          <div class="faq-item">
+            <h4>How do I apply a promo code?</h4>
+            <p>Enter your promo code at checkout in the "Discount Code" field and click "Apply" to receive your discount.</p>
+          </div>
+          <div class="faq-item">
+            <h4>What if there's an issue with my order?</h4>
+            <p>Contact our 24/7 support team through live chat, email, or phone, and we'll resolve your issue immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <div>
+        <div class="brand" style="margin-bottom:8px">
+          <span class="logo"></span>
+          <span style="font-weight:800">BiteDash</span>
+        </div>
+        <p style="color:var(--muted)">Delivering happiness one bite at a time. Order from the best local restaurants and chains near you.</p>
+      </div>
+      <div>
+        <strong>Company</strong>
+        <div class="row" style="margin-top:10px">
+          <a href="#">About</a>
+          <a href="#">Careers</a>
+          <a href="#">Help Center</a>
+        </div>
+      </div>
+      <div>
+        <strong>Legal</strong>
+        <div class="row" style="margin-top:10px">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    
+    // --- Demo Data (30 items) ---
+    
+
+  
+const DISHES = [
+      // Burgers
+      {id:'bg1', name:'Smash Burger Deluxe', tag:'burger', price:9.99, time:'20–30 min', rating:4.8, img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80'},
+      {id:'bg2', name:'Truffle Cheeseburger', tag:'burger', price:11.49, time:'25–35 min', rating:4.9, img:'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=800&q=80'},
+      {id:'bg3', name:'BBQ Bacon Burger', tag:'burger', price:12.49, time:'20–30 min', rating:4.7, img:'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=800&q=80'},
+      {id:'bg4', name:'Crispy Chicken Burger', tag:'burger', price:10.99, time:'20–25 min', rating:4.6, img:'https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=800&q=80'},
+      {id:'bg5', name:'Double Cheese Burger', tag:'burger', price:13.49, time:'25–30 min', rating:4.9, img:'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&q=80'},
+      
+      {id:'bg7', name:'Mushroom Swiss Burger', tag:'burger', price:12.99, time:'20–30 min', rating:4.8, img:'https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&q=80'},
+      {id:'bg8', name:'Avocado Ranch Burger', tag:'burger', price:13.99, time:'20–25 min', rating:4.7, img:'https://images.unsplash.com/photo-1550317138-10000687a72b?w=800&q=80'},
+      {id:'bg9', name:'Black Bean Veggie Burger', tag:'burger', price:11.99, time:'15–25 min', rating:4.6, img:'https://images.unsplash.com/photo-1525059696034-4967a8e1dca2?w=800&q=80'},
+
+      // Pizzas
+      {id:'pz1', name:'Margherita Neapolitan', tag:'pizza', price:12.99, time:'20–30 min', rating:4.7, img:'https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=800&q=80'},
+      {id:'pz2', name:'Pepperoni Blaze', tag:'pizza', price:13.49, time:'25–35 min', rating:4.8, img:'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&q=80'},
+      {id:'pz3', name:'Four Cheese Pizza', tag:'pizza', price:14.99, time:'20–30 min', rating:4.9, img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80'},
+      {id:'pz4', name:'BBQ Chicken Pizza', tag:'pizza', price:15.49, time:'25–35 min', rating:4.8, img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80'},
+      {id:'pz5', name:'Veggie Supreme Pizza', tag:'pizza', price:13.99, time:'20–30 min', rating:4.6, img:'https://images.unsplash.com/photo-1615719413546-198b25453f85?w=800&q=80'},
+      {id:'pz6', name:'Hawaiian Pizza', tag:'pizza', price:14.49, time:'20–30 min', rating:4.5, img:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80'},
+      
+      {id:'pz8', name:'Mediterranean Pizza', tag:'pizza', price:15.99, time:'20–30 min', rating:4.8, img:'https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=800&q=80'},
+      {id:'pz9', name:'Spinach Alfredo Pizza', tag:'pizza', price:14.99, time:'20–30 min', rating:4.6, img:'https://images.unsplash.com/photo-1552539618-7eec9b4d1796?w=800&q=80'},
+
+      // Sushi
+      {id:'su1', name:'Salmon Nigiri Set', tag:'sushi', price:15.99, time:'30–40 min', rating:4.9, img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&q=80'},
+      {id:'su2', name:'Spicy Tuna Rolls', tag:'sushi', price:14.49, time:'25–35 min', rating:4.8, img:'https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=800&q=80'},
+      {id:'su3', name:'Dragon Roll Sushi', tag:'sushi', price:16.49, time:'25–35 min', rating:4.8, img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&q=80'},
+      {id:'su4', name:'California Rolls', tag:'sushi', price:13.99, time:'20–30 min', rating:4.7, img:'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=800&q=80'},
+      {id:'su5', name:'Eel Avocado Rolls', tag:'sushi', price:15.29, time:'25–30 min', rating:4.8, img:'https://images.unsplash.com/photo-1615761136599-86165bdf1a83?w=800&q=80'},
+      {id:'su6', name:'Shrimp Tempura Rolls', tag:'sushi', price:14.99, time:'25–30 min', rating:4.7, img:'https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=800&q=80'},
+
+      // Vegan
+      {id:'vg1', name:'Mediterranean Buddha Bowl', tag:'vegan', price:10.99, time:'15–25 min', rating:4.6, img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80'},
+      {id:'vg2', name:'Avocado Quinoa Salad', tag:'vegan', price:9.49, time:'15–20 min', rating:4.7, img:'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?w=800&q=80'},
+      {id:'vg3', name:'Falafel Wrap', tag:'vegan', price:8.99, time:'15–20 min', rating:4.6, img:'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800&q=80'},
+      {id:'vg4', name:'Vegan Burrito Bowl', tag:'vegan', price:11.49, time:'20–25 min', rating:4.7, img:'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&q=80'},
+      {id:'vg5', name:'Tofu Stir Fry', tag:'vegan', price:12.29, time:'20–30 min', rating:4.6, img:'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80'},
+      
+
+      // Pasta
+      {id:'pa1', name:'Spaghetti Carbonara', tag:'pasta', price:13.99, time:'20–30 min', rating:4.8, img:'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=800&q=80'},
+      {id:'pa2', name:'Fettuccine Alfredo', tag:'pasta', price:14.49, time:'25–30 min', rating:4.9, img:'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=800&q=80'},
+      {id:'pa3', name:'Shrimp Scampi', tag:'pasta', price:16.99, time:'25–35 min', rating:4.8, img:'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&q=80'},
+      {id:'pa4', name:'Lasagna Classica', tag:'pasta', price:15.99, time:'30–40 min', rating:4.9, img:'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&q=80'},
+      {id:'pa5', name:'Penne Arrabbiata', tag:'pasta', price:13.49, time:'20–30 min', rating:4.7, img:'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&q=80'},
+
+      // Desserts
+      {id:'ds1', name:'Chocolate Lava Cake', tag:'dessert', price:7.49, time:'15–20 min', rating:4.9, img:'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=800&q=80'},
+      {id:'ds2', name:'Classic Cheesecake', tag:'dessert', price:6.99, time:'15–20 min', rating:4.8, img:'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=800&q=80'},
+      {id:'ds3', name:'Tiramisu', tag:'dessert', price:7.99, time:'15–20 min', rating:4.9, img:'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=80'},
+      {id:'ds4', name:'Apple Crumble', tag:'dessert', price:6.49, time:'15–20 min', rating:4.7, img:'https://images.unsplash.com/photo-1509461399763-ae67a981b254?w=800&q=80'},
+      {id:'ds5', name:'Crème Brûlée', tag:'dessert', price:8.49, time:'15–20 min', rating:4.8, img:'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=800&q=80'},
+      {id:'ds6', name:'Red Velvet Cake', tag:'dessert', price:7.29, time:'15–20 min', rating:4.8, img:'https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=800&q=80'},
+
+      // Drinks
+      {id:'dr1', name:'Iced Latte', tag:'drink', price:4.99, time:'5–10 min', rating:4.7, img:'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=800&q=80'},
+      {id:'dr2', name:'Mango Smoothie', tag:'drink', price:5.49, time:'5–10 min', rating:4.8, img:'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=800&q=80'},
+      {id:'dr3', name:'Fresh Mint Mojito', tag:'drink', price:6.49, time:'5–10 min', rating:4.9, img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=800&q=80'},
+      {id:'dr4', name:'Berry Blast Smoothie', tag:'drink', price:5.99, time:'5–10 min', rating:4.8, img:'https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=800&q=80'},
+      
+      {id:'dr6', name:'Caramel Frappuccino', tag:'drink', price:5.99, time:'5–10 min', rating:4.8, img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&q=80'},
+      {id:'dr7', name:'Fresh Orange Juice', tag:'drink', price:4.49, time:'5–10 min', rating:4.7, img:'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=800&q=80'},
+
+      // Asian Cuisine
+      {id:'as1', name:'Pad Thai Noodles', tag:'asian', price:14.99, time:'25–35 min', rating:4.8, img:'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&q=80'},
+      {id:'as2', name:'Chicken Fried Rice', tag:'asian', price:13.49, time:'20–30 min', rating:4.7, img:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&q=80'},
+      
+      {id:'as5', name:'Korean BBQ Bowl', tag:'asian', price:16.99, time:'25–35 min', rating:4.9, img:'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=800&q=80'},
+      
+
+      // Mexican Cuisine
+      
+      {id:'mx2', name:'Chicken Quesadilla', tag:'mexican', price:12.49, time:'20–30 min', rating:4.7, img:'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=800&q=80'},
+      {id:'mx3', name:'Supreme Nachos', tag:'mexican', price:13.99, time:'15–25 min', rating:4.6, img:'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=800&q=80'},
+      {id:'mx4', name:'Burrito Grande', tag:'mexican', price:14.49, time:'20–30 min', rating:4.8, img:'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800&q=80'},
+      {id:'mx5', name:'Enchiladas Verdes', tag:'mexican', price:15.99, time:'25–35 min', rating:4.9, img:'https://images.unsplash.com/photo-1534352956036-cd81e27dd615?w=800&q=80'},
+      
+      // Featured & Gourmet Selection
+      {id:'ft1', name:'Wagyu Beef Steak', tag:'featured,gourmet', price:49.99, time:'30–40 min', rating:4.9, img:'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80'},
+     
+
+      // Mediterranean Cuisine
+     
+     
+
+      // Indian Cuisine
+      {id:'in1', name:'Butter Chicken', tag:'indian', price:18.99, time:'25–35 min', rating:4.9, img:'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=800&q=80'},
+     
+      {id:'in3', name:'Tandoori Mixed Grill', tag:'indian', price:25.99, time:'30–40 min', rating:4.8, img:'https://images.unsplash.com/photo-1606471191009-63994c53433b?w=800&q=80'},
+
+      // Seafood Specials
+      {id:'sf1', name:'Grilled Salmon Fillet', tag:'seafood', price:27.99, time:'25–35 min', rating:4.8, img:'https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=800&q=80'},
+      {id:'sf2', name:'Seafood Paella', tag:'seafood,mediterranean', price:32.99, time:'35–45 min', rating:4.9, img:'https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=800&q=80'},
+      {id:'sf3', name:'Tuna Tataki', tag:'seafood,asian', price:23.99, time:'20–30 min', rating:4.8, img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&q=80'},
+
+      // Premium Beverages
+      {id:'bv1', name:'Artisanal Coffee Flight', tag:'drink', price:12.99, time:'10–15 min', rating:4.9, img:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80'},
+      
+      {id:'bv3', name:'Fresh Pressed Juice Set', tag:'drink', price:15.99, time:'10–15 min', rating:4.7, img:'https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?w=800&q=80'},
+
+      // Chef's Special Collection
+      {id:'cs1', name:'36-Hour Sous Vide Short Rib', tag:'featured,gourmet', price:54.99, time:'35–45 min', rating:4.9, img:'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80'},
+      
+
+      // Luxury Seafood
+      
+      {id:'ls2', name:'King Crab Legs', tag:'seafood,gourmet', price:79.99, time:'30–40 min', rating:4.9, img:'https://images.unsplash.com/photo-1559742811-822873691df8?w=800&q=80'},
+      
+      // Asian Fusion
+      {id:'af1', name:'Wagyu Sushi Platter', tag:'asian,gourmet', price:65.99, time:'30–40 min', rating:4.9, img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&q=80'},
+     
+      {id:'af3', name:'Korean Royal Cuisine', tag:'asian,gourmet', price:72.99, time:'35–45 min', rating:4.9, img:'https://images.unsplash.com/photo-1580651315530-69c8e0026377?w=800&q=80'},
+
+      // Vegetarian Luxe
+      {id:'vl1', name:'Truffle Wild Mushroom Risotto', tag:'vegan,gourmet', price:38.99, time:'25–35 min', rating:4.8, img:'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&q=80'},
+      {id:'vl2', name:'Garden of Eden Platter', tag:'vegan,gourmet', price:42.99, time:'20–30 min', rating:4.8, img:'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=800&q=80'},
+      {id:'vl3', name:'Molecular Gastronomy Salad', tag:'vegan,gourmet', price:36.99, time:'20–30 min', rating:4.7, img:'https://images.unsplash.com/photo-1547496502-affa22d38842?w=800&q=80'},
+
+      // Artisanal Desserts
+      
+      {id:'ad2', name:'Vanilla Bean Crème Brûlée Trio', tag:'dessert,gourmet', price:24.99, time:'15–25 min', rating:4.8, img:'https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=800&q=80'},
+      {id:'ad3', name:'French Macaron Collection', tag:'dessert,gourmet', price:34.99, time:'15–25 min', rating:4.9, img:'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=800&q=80'},
+
+      // Signature Cocktails
+      {id:'sc1', name:'Smoked Old Fashioned Set', tag:'drink,gourmet', price:22.99, time:'15–25 min', rating:4.9, img:'https://images.unsplash.com/photo-1551751299-1b51cab2694c?w=800&q=80'},
+      {id:'sc2', name:'Molecular Mixology Flight', tag:'drink,gourmet', price:28.99, time:'15–25 min', rating:4.8, img:'https://images.unsplash.com/photo-1536935338788-846bb9981813?w=800&q=80'},
+ 
+];
+
+    const grid = document.getElementById('grid');
+    const chips = document.querySelectorAll('.chip');
+    const search = document.getElementById('search');
+
+    function cardTemplate(item){
+      return `
+        <article class="card" role="listitem">
+          <div class="thumb"><img src="${item.img}" alt="${item.name}"></div>
+          <div class="card-body">
+            <div style="display:flex; align-items:center; gap:8px">
+              <div class="title">${item.name}</div>
+              <div class="meta" title="Estimated time">⏱ ${item.time}</div>
+              <div class="meta" title="Rating">★ ${item.rating}</div>
+              <div class="price">$${item.price.toFixed(2)}</div>
+            </div>
+            <div class="add">
+              <div class="qty">
+                <button aria-label="Decrease" onclick="changeQty('${item.id}', -1)">−</button>
+                <span id="qty-${item.id}">0</span>
+                <button aria-label="Increase" onclick="changeQty('${item.id}', 1)">+</button>
+              </div>
+              <button class="btn" onclick="addToCart('${item.id}')">Add to cart</button>
+            </div>
+          </div>
+        </article>
+      `;
+     function renderCart() {
+  const cartContainer = document.getElementById("cart-items");
+  cartContainer.innerHTML = "";
+
+  if (cart.length === 0) {
+    cartContainer.innerHTML = `
+      <div style="text-align:center; padding:40px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png" 
+             alt="Empty cart" 
+             style="width:150px; margin-bottom:15px; opacity:0.7;">
+        <p style="color:#aaa; font-size:1.1rem;">Your cart is empty</p>
+      </div>
+    `;
+    return;
+  }
+
+  // render items normally if cart is not empty
+  cart.forEach(item => {
+    cartContainer.innerHTML += `
+      <div class="cart-item">
+        <span>${item.name}</span>
+        <span>$${item.price.toFixed(2)}</span>
+      </div>
+    `;
+  });
+}
+ 
+    }
+
+    function render(filter='all', query=''){
+      const q = query.trim().toLowerCase();
+      const items = DISHES.filter(d => (filter==='all' || d.tag===filter) && (!q || d.name.toLowerCase().includes(q)));
+      grid.innerHTML = items.map(cardTemplate).join('');
+    }
+
+    chips.forEach(c => c.addEventListener('click', () => {
+      chips.forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      render(c.dataset.filter, search.value);
+    }));
+
+    search.addEventListener('input', () => {
+      const active = document.querySelector('.chip.active')?.dataset.filter || 'all';
+      render(active, search.value);
+    });
+
+    // --- Cart Logic ---
+    const cart = new Map(); // id -> {item, qty}
+    const drawer = document.getElementById('cartDrawer');
+    const cartItems = document.getElementById('cartItems');
+    const subtotalEl = document.getElementById('subtotal');
+    const deliveryFeeEl = document.getElementById('deliveryFee');
+    const totalEl = document.getElementById('total');
+    const cartCount = document.getElementById('cartCount');
+    const cartCountFloating = document.getElementById('cartCountFloating');
+
+    document.getElementById('openCart').addEventListener('click', () => toggleDrawer());
+
+    function toggleDrawer(force){
+      const open = force===undefined ? !drawer.classList.contains('open') : force;
+      drawer.classList.toggle('open', open);
+    }
+
+    function updateBadges(){
+      const count = [...cart.values()].reduce((n, v) => n + v.qty, 0);
+      [cartCount, cartCountFloating].forEach(b => {
+        b.textContent = count;
+        b.style.display = count ? 'inline-block' : 'none';
+      });
+    }
+
+    function addToCart(id){
+      const item = DISHES.find(d => d.id===id);
+      const line = cart.get(id) || {item, qty:0};
+      line.qty += 1;
+      cart.set(id, line);
+      document.getElementById(`qty-${id}`).textContent = line.qty;
+      renderCart();
+      updateBadges();
+    }
+
+    function changeQty(id, delta){
+      const line = cart.get(id) || {item:DISHES.find(d=>d.id===id), qty:0};
+      line.qty = Math.max(0, line.qty + delta);
+      if(line.qty===0){ cart.delete(id); } else { cart.set(id, line); }
+      document.getElementById(`qty-${id}`).textContent = line.qty;
+      renderCart();
+      updateBadges();
+    }
+
+    function renderCart(){
+      const lines = [...cart.values()];
+      if(!lines.length){
+        cartItems.innerHTML = '<div style="padding:16px; color:var(--muted)">Your cart is empty. Add something tasty!</div>';
+      } else {
+        cartItems.innerHTML = lines.map(({item, qty}) => `
+          <div class="line">
+            <img src="${item.img}" alt="${item.name}">
+            <div class="grow">
+              <div style="font-weight:700">${item.name}</div>
+              <div style="color:var(--muted); font-size:13px">$${item.price.toFixed(2)} • ${item.time}</div>
+            </div>
+            <div class="qty-mini">
+              <button aria-label="Decrease" onclick="changeQty('${item.id}', -1)">−</button>
+              <span>${qty}</span>
+              <button aria-label="Increase" onclick="changeQty('${item.id}', 1)">+</button>
+            </div>
+            <div style="font-weight:800; width:70px; text-align:right">$${(item.price*qty).toFixed(2)}</div>
+          </div>
+        `).join('');
+      }
+      const subtotal = lines.reduce((sum, {item, qty}) => sum + item.price*qty, 0);
+      const delivery = lines.length ? 2.99 : 0;
+      subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+      deliveryFeeEl.textContent = `$${delivery.toFixed(2)}`;
+      totalEl.textContent = `$${(subtotal + delivery).toFixed(2)}`;
+    }
+
+    function fakeCheckout(){ alert('This is a demo checkout. Connect your payment gateway and backend to make it live.'); }
+    function scrollToMenu(){ document.getElementById('menu').scrollIntoView({behavior:'smooth'}); }
+    function demoAddBestSellers(){ ['bg1','pz1','su1'].forEach(addToCart); toggleDrawer(true); }
+
+    // Promo code functions
+    function copyCode(code) {
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.textContent = originalText;
+        }, 2000);
+      });
+    }
+
+    // Customer support functions
+    function startLiveChat() {
+      // Implement your live chat integration here
+      alert('Live chat feature demo');
+    }
+
+    function trackOrder(orderId) {
+      // Implement your order tracking logic here
+      alert('Order tracking demo for order: ' + orderId);
+    }
+
+    // Login Modal Functions
+    const loginModal = document.getElementById('loginModal');
+    document.getElementById('openLogin').addEventListener('click', () => toggleLogin(true));
+
+    function toggleLogin(show = true) {
+      loginModal.style.display = show ? 'flex' : 'none';
+      if (show) {
+        document.getElementById('email').focus();
+      }
+    }
+
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const remember = document.getElementById('remember').checked;
+      
+      // Demo login - Replace with your actual authentication logic
+      console.log('Login attempt:', { email, password, remember });
+      alert('This is a demo login. Implement your authentication logic here.');
+      toggleLogin(false);
+    }
+
+    // Close modal when clicking outside
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        toggleLogin(false);
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && loginModal.style.display === 'flex') {
+        toggleLogin(false);
+      }
+    });
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
